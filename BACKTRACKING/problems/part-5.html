@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ro">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backtracking • Probleme • Raicu Andrei</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <meta name="description" content="Backtracking — site de prezentare multi-page." />
+</head>
+
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Primary navigation">
+      <div class="brand">
+        <div class="badge">BACKTRACKING</div>
+        <div class="small">compact • curat • rapid</div>
+      </div>
+      <div class="links">
+        <a class="navlink" data-nav href="../index.html">Acasa</a>
+        <a class="navlink" data-nav href="../problems.html">Probleme</a>
+        <a class="navlink" data-nav href="../theory.html">Teorie</a>
+        <a class="navlink" data-nav href="../bibliography.html">Bibliografie</a>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+
+    <div class="breadcrumbs" aria-label="Breadcrumbs">
+      <a href="../index.html">Acasa</a><span>›</span>
+      <a href="../problems.html">Probleme</a><span>›</span>
+      <span>Raicu Andrei</span>
+    </div>
+
+
+    <section class="hero" style="padding-top: 18px;">
+      <div class="card pad">
+        <div class="sectionTitle">Probleme </div>
+        <h1 class="h1">Raicu Andrei</h1>
+
+
+        <div class="btnrow">
+          <a class="btn" href="part-4.html">← Tapelea Eva</a>
+          <a class="btn primary" href="part-6.html">Udrea David →</a>
+        </div>
+
+        <hr class="sep" />
+        <div class="pillrow">
+          <span class="pill"><strong>Structură:</strong> Cerință → Exemplu → Restricții și precizări → Cod</span>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#194</div>
+      <h3 class="h2">Anagrame1</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p"><i>Se numește anagramă a unui cuvânt dat, un alt cuvânt ce conține toate literele primului, eventual
+          în altă ordine.</i> <br><br>
+        Se dă un cuvânt din cel mult 8 litere distincte. Să se afișeze, în ordine alfabetică, toate anagramele acestui
+        cuvânt. <br><br>
+        Fişierul de intrare anagrame1.in conţine pe pe prima linie un cuvânt S, format din cel mult 8 litere distincte
+        ale alfabetului englez. <br><br>
+        Fişierul de ieşire anagrame1.out va conţine toate anagramele cuvântului S, fiecare pe o linie, în ordine
+        alfabetică.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>cal</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>acl
+alc
+cal
+cla
+lac
+lca</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>
+#include &lt;fstream>
+#include &lt;iostream>
+#include &lt;cstring>
+using namespace std;
+ifstream fin("anagrame1.in");
+ofstream fout("anagrame1.out");
+char s[10];
+int x[10],uz[10],n;
+void afis(int k){
+	for(int i=1;i&lt;=n;++i)
+		fout&lt;&lt;s[x[i]];
+	fout &lt;&lt; endl;
+}
+void back(int k){
+	for(int i=0;i&lt;n;++i)
+		if(uz[i]==0){
+			uz[i] = 1;
+			x[k]=i;
+			if(k==n)
+				afis(k);
+			else
+				back(k+1);
+			uz[i] = 0;
+		}
+}
+int main(){
+	fin >> s;
+	n = strlen(s);
+	for(int i=0;i&lt;n;++i)
+		for(int j=i+1; j&lt;n;j++)
+			if(s[i]>s[j]){
+				char aux = s[i];
+				s[i] = s[j];
+				s[j] = aux;
+			}
+	back(1);
+	return 0;
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#3909</div>
+      <h3 class="h2">Permutari6</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p">Se citesc două numere a și b. Să se afișeze, în ordine lexicografică, permutările mulțimii {a, a + 1,
+        ..., b}. <br><br>
+        Programul citește de la tastatură numerele a b. <br><br>
+        Programul va afișa pe ecran, fiecare pe câte o linie, permutările cerute. Elementele fiecărei permutări vor fi
+        separate prin câte un spațiu.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>4 6</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>4 5 6 
+4 6 5 
+5 4 6 
+5 6 4 
+6 4 5 
+6 5 4</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Restricții și precizări</div>
+      <p class="p"><strong>*</strong> 1 ≤ a &lt; b ≤ 1.000.000.000 <br>
+        <strong>*</strong> 0 &lt; b - a &lt; 8
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>
+#include &lt;iostream>
+using namespace std;
+int a , b , n , x[10];
+bool OK(int k)
+{
+	for(int i =1 ; i &lt; k ; i ++)
+		if(x[k] == x[i])
+			return false;
+	return true;
+}
+void Afisare()
+{
+	for(int i = 1 ; i &lt;= n ; i ++)
+		cout &lt;&lt; x[i] &lt;&lt; " ";
+	cout &lt;&lt; '\n';
+} 
+void Back(int k)
+{
+	for(int i = a ; i &lt;= b ; i ++)
+	{
+		x[k] = i;
+		if(OK(k))
+		{
+			if(k == n)
+				Afisare();
+			else
+				Back(k + 1);
+		}
+	}
+}
+int main()
+{
+	cin >> a >> b;
+	n = b - a + 1;
+	Back(1);
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#3155</div>
+      <h3 class="h2">anagrame4</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p">Se citește de la tastatură un cuvânt s format din cel mult 11 litere mici distincte.
+        Să se genereze în ordine alfabetică și să se afișeze toate anagramele cuvântului s în care consoanele sunt
+        puncte fixe. <br><br>
+        Programul citește de la tastatură cuvântul s. <br><br>
+        Programul va afișa pe ecran pe rânduri separate anagramele cuvântului citit în care consoanele rămân pe
+        pozițiile inițiale.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>sorina</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>sarino
+saroni
+sirano
+sirona
+sorani
+sorina</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Restricții și precizări</div>
+      <p class="p"><strong>*</strong> cuvântul s are cel mult 11 caractere și este format din litere mici distincte</p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>
+#include &lt;iostream>
+#include &lt;cstring>
+using namespace std;
+int n,X[12],P[12];
+char s[12],v[]="aeiou";
+void afisare()
+{
+    for(int i=1;i&lt;=n;i++)
+       cout&lt;&lt;s[X[i]];
+    cout&lt;&lt;'\n';
+}
+int ok(int k)
+{
+    if(!(s[X[k]]=='a' ||  s[X[k]]=='e' || s[X[k]]=='i' || s[X[k]]=='o' || s[X[k]]=='u') && X[k]!=k-1)
+        return 0;
+    return 1;
+}
+void back(int k)
+{
+    for(int i=0;i&lt;n;i++)
+        if(!P[i])
+        {
+            X[k]=i;
+            P[i]=1;
+            if(ok(k))
+            {
+                if(k==n)
+                    afisare();
+                else back(k+1);
+            }
+            P[i]=0;
+        }
+}
+int main()
+{
+    cin>>s;
+    n=strlen(s);
+    for(int i=0;i&lt;n;i++)
+        if(strchr(v,s[i])!=0)
+            for(int j=i+1;j&lt;n;j++)
+                if(strchr(v,s[j])!=0)
+                    if(s[i]>s[j] )
+                    {
+                        Int aux=s[i]; s[i]=s[j]; 
+s[j]=aux;
+                    }
+    back(1);
+    return 0;
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#391</div>
+      <h3 class="h2">Fractii</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p">Se dau n perechi de numere naturale nenule, fiecare reprezentând câte o fracţie.
+        Calculaţi suma celor n fracţii, aducând rezultatul la forma ireductibilă. <br><br>
+        Programul citește de la tastatură numărul n, iar apoi n perechi de numere naturale, reprezentând numărătorul şi
+        numitorul unei fracţii. <br><br>
+        Programul afișează pe ecran numerele P Q, separate prin exact un spaţiu, reprezentând numărătorul şi numitorul
+        fracţiei sumă, adusă la forma ireductibilă.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>4
+1 3
+5 6
+1 2
+4 2</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>11 3</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Restricţii şi precizări</div>
+      <p class="p"><strong>*</strong> 1 ≤ n ≤ 10 <br>
+        <strong>*</strong> numărătorul şi numitorul fiecărei fracţii sunt numere naturale cu cel mult două cifre
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>
+#include &lt;iostream>
+using namespace std;
+int main() {
+    int n, a, b, p = 0, q = 1;
+    cin >> n;
+    for(int i = 1; i &lt;= n; ++i) {
+        cin >> a >> b;
+        p = a * q + b * p;
+        q = b * q;
+        int x = p, y = q, r;
+        while (x % y != 0) {
+            r = x % y;
+            x = y;
+            y = r;
+        } p = p / y;
+q = q / y;
+    } cout &lt;&lt; p &lt;&lt; " " &lt;&lt; q; 
+    return 0;
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div>© <span data-year></span> • Backtracking</div>
+
+    </footer>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+
+</html>

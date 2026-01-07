@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="ro">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backtracking • Probleme • Udrea David</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <meta name="description" content="Backtracking — site de prezentare multi-page." />
+</head>
+
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Primary navigation">
+      <div class="brand">
+        <div class="badge">BACKTRACKING</div>
+        <div class="small">compact • curat • rapid</div>
+      </div>
+      <div class="links">
+        <a class="navlink" data-nav href="../index.html">Acasa</a>
+        <a class="navlink" data-nav href="../problems.html">Probleme</a>
+        <a class="navlink" data-nav href="../theory.html">Teorie</a>
+        <a class="navlink" data-nav href="../bibliography.html">Bibliografie</a>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+
+    <div class="breadcrumbs" aria-label="Breadcrumbs">
+      <a href="../index.html">Acasa</a><span>›</span>
+      <a href="../problems.html">Probleme</a><span>›</span>
+      <span>Udrea David</span>
+    </div>
+
+
+    <section class="hero" style="padding-top: 18px;">
+      <div class="card pad">
+        <div class="sectionTitle">Probleme </div>
+        <h1 class="h1">Udrea David</h1>
+
+
+        <div class="btnrow">
+          <a class="btn" href="part-5.html">← Raicu Andrei</a>
+          <a class="btn primary" href="../theory.html">Catre teorie →</a>
+        </div>
+
+        <hr class="sep" />
+        <div class="pillrow">
+          <span class="pill"><strong>Structură:</strong> Cerință → Exemplu → Restricții și precizări → Cod</span>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#1356</div>
+      <h3 class="h2">nsir</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p">Fie n un număr natural. <br>
+        Să se determine toate șirurile a de k numere naturale nu neapărat distincte: 1 ≤ a1, a2,...,ak ≤ n, astfel
+        încât: <br>
+        1) 1 = 1/a1+ 1/a2+...+ 1/ak <br>
+        2) n = a1 + a2 +...+ ak <br><br>
+        Fișierul de intrare nsir.in conține pe prima linie numărul n. <br><br>
+        Fișierul de ieșire nsir.out va conține pe fiecare linie câte un șir determinat, în ordine lexicografică.
+        Dacă nu poate fi generat un astfel de șir, atunci se va scrie valoarea 0 pe prima linie a fișierului de ieșire.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>33</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>3 3 9 9 9
+3 5 5 5 15</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Restricții și precizări</div>
+      <p class="p"><strong>*</strong> 5 ≤ n ≤ 75 <br>
+        <strong>*</strong> se admite că cerința 1) este satisfăcută dacă: | 1/a1 + 1/a2 + … + 1/ak – 1 |&gt;10-5
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>#include &lt;iostream>
+#include &lt;fstream>
+
+using namespace std;
+
+int n,k,a[100],gasit=0;
+
+ofstream fout("nsir.out");
+
+void back(int start, int suma, double sumaInv) {
+
+    if (suma > n || sumaInv > 1.00001f)
+        return;
+    if (suma == n) {
+        if (sumaInv > 0.99999f && sumaInv &lt; 1.00001f) {
+            gasit = 1;
+            for (int i = 1; i &lt;= k; i++)
+                fout &lt;&lt; a[i] &lt;&lt; " ";
+            fout &lt;&lt; "\n";
+        }
+        return;
+    }
+
+
+    for (int x = start; x &lt;= n; x++) {
+        a[++k] = x;
+        back(x, suma + x, sumaInv + 1.0f / x);
+        k--;
+    }
+}
+
+int main() {
+    ifstream fin("nsir.in");
+    ofstream fout("nsir.out");
+    fin >> n;
+
+    back(1, 0, 0.0f);
+
+    if (gasit == 0)
+        fout &lt;&lt; 0;
+
+    fin.close();
+    fout.close();
+
+    return 0;
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#3982</div>
+      <h3 class="h2">descp2</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p">Se dă un număr natural par n. Determinaţi, în ordine lexicografică,
+        toate modalităţile de a-l scrie pe n ca sumă de puteri ale lui 2 scrise în ordine crescătoare.
+        Se vor folosi doar puterile mai mari sau egale cu 2. <br><br>
+        Fișierul de intrare descp2.in conține pe prima linie numărul n. <br><br>
+        Fişierul de ieşire descp2.out va conţine pe pe fiecare linie câte un şir de numerecare
+        sunt puteri ale lui 2, ordonate crescător, separate prin câte un spaţiu. Suma numerelor
+        din fiecare şir este n. Şirurile vor fi afişate în ordine lexicografică.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>12</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>2 2 2 2 2 2 
+2 2 2 2 4 
+2 2 4 4 
+2 2 8 
+4 4 4 
+4 8</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Restricții și precizări</div>
+      <p class="p"><strong>*</strong> 2 ≤ n ≤ 250 și este număr par</p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>
+#include &lt;iostream>
+#include &lt;fstream>
+using namespace std;
+
+ifstream fin("descp2.in");
+ofstream fout("descp2.out");
+
+int n;
+int sol[100];
+int k;
+
+void back(int suma, int start) {
+    if (suma == n) {
+        for (int i = 0; i &lt; k; i++)
+            fout &lt;&lt; sol[i] &lt;&lt; " ";
+        fout &lt;&lt; "\n";
+        return;
+    }
+
+    for (int p = start; suma + p &lt;= n; p *= 2) {
+        sol[k] = p;
+        k++;
+        back(suma + p, p);
+        k--;
+    }
+}
+
+int main() {
+    fin >> n;
+    k = 0;
+    back(0, 2);
+    return 0;
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#4531</div>
+      <h3 class="h2">PartitiiPrime</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p">Se dă un număr natural n. Determinați, în ordine lexicografică,
+        toate modalitățile de a-l scrie pe n ca sumă de numere prime, ordonate crescător. <br><br>
+        Programul citește de la tastatură numărul n. <br><br>
+        Programul va afișa pe ecran pe fiecare linie câte un șir de numere prime ordonate crescător,
+        separate prin câte un spațiu. Suma numerelor din fiecare șir este n, iar șirurile vor fi afișate în ordine
+        lexicografică.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>13</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>2 2 2 2 2 3
+2 2 2 2 5
+2 2 2 7
+2 2 3 3 3
+2 3 3 5
+2 11
+3 3 7
+3 5 5
+13</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Restricții și precizări</div>
+      <p class="p"><strong>*</strong> 2 ≤ n ≤ 100</p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>
+#include &lt;iostream>
+using namespace std;
+int n,k,sol[101],prime[101];
+int prim(int x)
+{
+    if(x&lt;2)
+        return 0;
+    int I;
+    for(i=2; i*i&lt;=x; i++)
+        if(x%i==0)
+            return 0;
+    return 1;
+}
+void back(int ultim,int s)
+{
+    if(s==n)
+    {
+        for(int i=1; i&lt;=k; i++)
+            cout&lt;&lt;sol[i]&lt;&lt;" ";
+        cout&lt;&lt;endl;
+        return;
+    }
+    int p;
+    for(p=ultim; p&lt;=n-sum; p++)
+    {
+        if(prime[p]==1)
+        {
+            sol[k++]=p;
+            back(p,sum+p);
+            k--;
+        }
+    }
+}
+int main()
+{
+    cin>>n;
+    int I;
+    for(i=2; i&lt;=n; i++)
+        prime[i]=prim(i);
+    back(2,0);
+    return 0;
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top: 16px;">
+      <div class="sectionTitle">#4910</div>
+      <h3 class="h2">PartitiiNrXI</h3>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cerință</div>
+      <p class="p">Se dă un număr natural n. Determinați, în ordine lexicografică,
+        toate modalitățile de a-l scrie pe n ca sumă de numere naturale ordonate strict crescător astfel
+        încât oricare dintre doi termeni consecutivi ai sumei să aibă parități diferite. <br><br>
+        Programul citește de la tastatură numărul n. <br><br>
+        Programul va afișa pe ecran pe fiecare linie câte un șir de numere naturale ordonate strict crescător,
+        separate prin câte un spațiu. Suma numerelor din fiecare șir este n, iar oricare dintre doi termeni consecutivi
+        ai sumei au parități diferite. Șirurile vor fi afișate în ordine lexicografică.
+      </p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Exemplu</div>
+      <div class="io" aria-label="Input output example">
+        <div class="mini">
+          <h4>Input</h4>
+          <pre>12</pre>
+        </div>
+        <div class="mini">
+          <h4>Output</h4>
+          <pre>1 2 3 6
+1 2 9
+1 4 7
+3 4 5
+12</pre>
+        </div>
+      </div>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Restricții și precizări</div>
+      <p class="p"><strong>*</strong> 1 ≤ n ≤ 150</p>
+
+      <hr class="sep" />
+
+      <div class="sectionTitle">Cod (soluție)</div>
+      <div class="codebox" role="region" aria-label="Code solution box">
+        <div class="codebox-top">
+          <div class="dots" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="label">solutie.cpp</div>
+        </div>
+        <pre><code>
+#include &lt;iostream>
+using namespace std;
+
+int n, k = 0;
+int sol[101], prime[101];
+
+int prim(int x)
+{
+    if (x &lt; 2)
+        return 0;
+    for (int i = 2; i * i &lt;= x; i++)
+        if (x % i == 0)
+            return 0;
+    return 1;
+}
+
+void back(int ultim, int s)
+{
+    if (s == n)
+    {
+        for (int i = 1; i &lt;= k; i++)
+            cout &lt;&lt; sol[i] &lt;&lt; " ";
+        cout &lt;&lt; endl;
+        return;
+    }
+
+    for (int p = ultim; p &lt;= n - s; p++)
+    {
+        if (prime[p])
+        {
+            sol[++k] = p;
+            back(p, s + p);
+            k--;
+        }
+    }
+}
+
+int main()
+{
+    cin >> n;
+
+    for (int i = 2; i &lt;= n; i++)
+        prime[i] = prim(i);
+
+    back(2, 0);
+
+    return 0;
+}
+        </code></pre>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div>© <span data-year></span> • Backtracking</div>
+
+    </footer>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+
+</html>
