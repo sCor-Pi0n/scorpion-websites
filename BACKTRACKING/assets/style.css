@@ -44,6 +44,10 @@ body {
     radial-gradient(1000px 500px at 85% 20%, rgba(46, 229, 157, .18), transparent 52%),
     radial-gradient(800px 500px at 60% 90%, rgba(124, 92, 255, .12), transparent 55%),
     var(--bg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   line-height: 1.6;
 }
 
