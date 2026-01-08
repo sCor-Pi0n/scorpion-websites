@@ -481,7 +481,7 @@ ifstream f("paranteze.in");
 ofstream g("paranteze.out");
 char s[21],d ='(',i =')';
 int n,m;
-void back(int k,int cd,int ci)//cd=contor deschis; ci=contor inchis
+void back(int k,int cd,int ci)
 {
     if(k==n)
     {
@@ -490,13 +490,13 @@ void back(int k,int cd,int ci)//cd=contor deschis; ci=contor inchis
         g&lt;&lt;endl;
         return;
     }
-    // punem '(' daca mai avem voie
+   
     if (cd&lt;m)
     {
         s[k]=d;
         back(k+1,cd+1,ci);
     }
-    // punem ')' doar dacă nu stricam corectitudinea
+    
     if (ci&lt;cd)
     {
         s[k]=i;
