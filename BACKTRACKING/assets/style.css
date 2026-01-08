@@ -68,7 +68,7 @@ a:hover {
 }
 
 .topbar {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 50;
   backdrop-filter: blur(14px);
