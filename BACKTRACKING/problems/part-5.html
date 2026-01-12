@@ -195,37 +195,37 @@ int main(){
 #include &lt;iostream>
 using namespace std;
 int a , b , n , x[10];
-bool OK(int k)
+int OK(int k)
 {
-	for(int i =1 ; i &lt; k ; i ++)
+	for(int i=1;i&lt;k;i++)
 		if(x[k] == x[i])
-			return false;
-	return true;
+			return 0;
+	return 1;
 }
 void Afisare()
 {
-	for(int i = 1 ; i &lt;= n ; i ++)
-		cout &lt;&lt; x[i] &lt;&lt; " ";
-	cout &lt;&lt; '\n';
+	for(int i=1;i&lt;=n;i++)
+		cout&lt;&lt;x[i]&lt;&lt; " ";
+	cout&lt;&lt;endl;
 } 
 void Back(int k)
 {
-	for(int i = a ; i &lt;= b ; i ++)
+	for(int i=a;i&lt;= b;i++)
 	{
 		x[k] = i;
 		if(OK(k))
 		{
-			if(k == n)
+			if(k==n)
 				Afisare();
 			else
-				Back(k + 1);
+				Back(k+1);
 		}
 	}
 }
 int main()
 {
-	cin >> a >> b;
-	n = b - a + 1;
+	cin>>a >>b;
+	n=b-a+1;
 	Back(1);
 }
         </code></pre>
@@ -386,24 +386,26 @@ s[j]=aux;
           <div class="label">solutie.cpp</div>
         </div>
         <pre><code>
-#include &lt;iostream>
-using namespace std;
-int main() {
-    int n, a, b, p = 0, q = 1;
-    cin >> n;
-    for(int i = 1; i &lt;= n; ++i) {
-        cin >> a >> b;
-        p = a * q + b * p;
-        q = b * q;
-        int x = p, y = q, r;
-        while (x % y != 0) {
-            r = x % y;
-            x = y;
-            y = r;
-        } p = p / y;
-q = q / y;
-    } cout &lt;&lt; p &lt;&lt; " " &lt;&lt; q; 
-    return 0;
+#include&lt;iostream>
+usingnamespace std;
+int main(){
+	int n,a,b,p=0,q=1;
+	cin>>n;
+	for(int i=1;i&lt;=n;++i){
+		cin>>a>>b;
+		p=a*q+b*p;
+		q=b*q;
+		int x=p,y=q,r;
+		while(x%y!=0){
+			r=x%y;
+			x=y;
+			y=r;
+		}
+		p=p/y;
+		q=q/y;
+	}
+	cout&lt;&lt;p&lt;&lt;" "&lt;&lt;q;
+	return 0;
 }
         </code></pre>
       </div>
